@@ -10,4 +10,7 @@ tags:
   - terraform
   - terraform-module
   - aws
-  - 
+  - aws-iam
+  - external-services
+  - continuous-integration
+  - continuous-delivery
