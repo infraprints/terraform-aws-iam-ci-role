@@ -1,9 +1,9 @@
 ---
-name: AWS IAM Role for CI
+name: AWS IAM Resources for CI
 slug: iam-ci-role
 project: infraprints
 namespace: [terraform, aws]
-description: Describes a container auto-scaling policy controlled by a SQS resource.
+description: Describes IAM resources for delegating access to external services.
 license:
   name: MIT
 tags:
