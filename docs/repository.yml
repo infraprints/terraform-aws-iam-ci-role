@@ -1,0 +1,16 @@
+---
+name: AWS IAM Resources for CI
+slug: iam-ci-role
+project: infraprints
+namespace: [terraform, aws]
+description: Describes IAM resources for delegating access to external services.
+license:
+  name: MIT
+tags:
+  - terraform
+  - terraform-module
+  - aws
+  - aws-iam
+  - external-services
+  - continuous-integration
+  - continuous-delivery
