@@ -1,4 +1,4 @@
-# Basic Usage
+# Policies Usage
 
 This shows an example of Terraform code to deploy an IAM User and role pair for use in continuous integration.
 
