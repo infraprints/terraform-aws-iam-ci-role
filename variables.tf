@@ -1,8 +1,10 @@
+//role
 variable "role_name" {
   type        = "string"
   description = "The name of the role."
 }
 
+//user
 variable "username" {
   type        = "string"
   description = "The name of the user."
@@ -19,14 +21,14 @@ variable "period" {
   default = 32400
 }
 
-variable "path" {
+variable "max_session_duration" {
   type    = "string"
-  default = "ci"
+  default = 32400
 }
 
-variable "service" {
+variable "path" {
   type    = "string"
-  default = "GitLab"
+  default = "/ci/"
 }
 
 variable "environment_variable" {
@@ -37,11 +39,17 @@ variable "environment_variable" {
 
 variable "tags" {
   type        = "map"
-  description = "Key-value mapping of tags for the IAM role."
+  description = "Key-value mapping of tags for the IAM resources."
   default     = {}
 }
 
 variable "labels" {
   type    = "map"
   default = {}
+}
+
+variable "policies" {
+  type        = "list"
+  description = "The default policies applied to the IAM Role."
+  default     = []
 }

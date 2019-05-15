@@ -17,18 +17,24 @@ locals {
 
 resource "aws_iam_role" "external" {
   name                  = "${var.role_name}"
-  path                  = "/${lower(var.path)}/${lower(var.service)}/"
-  assume_role_policy    = "${data.aws_iam_policy_document.external_role.json}"
-  description           = "User-linked role accessible by ${var.username} for |SAMPLE|"
-  max_session_duration  = 43200
+  path                  = "${var.path}"
+  assume_role_policy    = "${data.aws_iam_policy_document.role.json}"
+  description           = "User-linked role accessible by ${var.username} for deploying resources"
+  max_session_duration  = "${var.max_session_duration}"
   force_detach_policies = true
 
   tags = "${merge(local.global, var.tags, local.labels)}"
 }
 
+resource "aws_iam_role_policy_attachment" "policies" {
+  count      = "${length(var.policies)}"
+  role       = "${aws_iam_role.external.id}"
+  policy_arn = "${element(var.policies, count.index)}"
+}
+
 resource "aws_iam_user" "external" {
   name = "${var.username}"
-  path = "/${lower(var.path)}/${lower(var.service)}/"
+  path = "${var.path}"
   tags = "${merge(local.global, local.adjusted_env_vars, var.tags, local.labels)}"
 }
 
@@ -37,7 +43,7 @@ resource "random_string" "external_id" {
   special = false
 }
 
-data "aws_iam_policy_document" "external_role" {
+data "aws_iam_policy_document" "role" {
   statement {
     sid     = "AllowUserAssume"
     effect  = "Allow"
@@ -59,10 +65,10 @@ data "aws_iam_policy_document" "external_role" {
 resource "aws_iam_user_policy" "external" {
   name   = "AssumeRole"
   user   = "${aws_iam_user.external.name}"
-  policy = "${data.aws_iam_policy_document.external_user.json}"
+  policy = "${data.aws_iam_policy_document.user.json}"
 }
 
-data "aws_iam_policy_document" "external_user" {
+data "aws_iam_policy_document" "user" {
   statement {
     sid       = "AllowAssumeOfRole"
     effect    = "Allow"
